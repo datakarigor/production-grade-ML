@@ -1,28 +1,58 @@
-# production-grade-ML
+# Penguins Species Classifier
 
-A hands-on exercise in turning a messy notebook into clean, working code.
-This repo is the running example for a course on going from notebook
-prototyping to production-ready ML.
+This repository is a hands-on example of turning a notebook-based ML workflow into a
+clean, maintainable, production-style Python project. The same Palmer Penguins
+species classifier is built across multiple stages, with each stage improving the
+structure, reproducibility, and handoff quality of the code.
 
-Every stage below trains the same simple model, a Palmer Penguins species
-classifier. But the *code* gets better at each step.
+## Project stages
 
-## Homework (do this before class)
+1. `stage0_prototype/`: the original messy notebook prototype
+2. `stage1_structured_code/`: the same workflow reorganized into clearer code
+3. `stage2_functions/`: logic split into reusable functions
+4. `stage_3_modularized/`: a modular project with a dedicated training workflow and
+   prediction CLI
 
-Work through these three folders in order. Open each `notebook.ipynb`, read
-through it top to bottom, run it, and try to spot what's wrong with it, what would
-make it hard to hand off to a teammate, or hard to change later.
+The early stages focus on learning how the workflow evolves from ad hoc notebook
+code to a more robust engineering structure. The final stage represents the
+production-ready version of the project.
 
-1. `stage0_prototype/`: the messy first draft, the kind of notebook everyone
-   actually writes
-2. `stage1_structured_code/`:  same logic, tidied up and easier to follow
-3. `stage2_functions/`: logic broken into reusable functions
+## Stage 3: modularized ML project
 
-Come to class with a few issues you noticed in each stage, we'll compare
-notes before looking at how to fix them.
+Stage 3 turns the pipeline into a modular Python project with separate training and
+prediction workflows.
 
-## In class
+### Train a model
 
-We'll take this same project one step further and turn it into a real,
-production-ready project, that part will make a lot more sense once you've
-been through the homework above.
+```bash
+conda activate data-karigor
+python train.py
+```
+
+From the `stage_3_modularized/` directory, this reads the Penguins dataset, cleans it,
+fits the configured models, selects the best performer, and saves trained artifacts in
+`artifacts/`:
+
+- `model.joblib`
+- `scaler.joblib`
+- `encoders.joblib`
+- `feature_cols.json`
+- `metrics.json`
+
+### Predict a species
+
+```bash
+python predict.py
+```
+
+The prediction script loads the saved artifacts and classifies one raw penguin record
+from `configs/sample.json`.
+
+### Test the project
+
+```bash
+python -m pytest
+```
+
+This project is intended to demonstrate how ML work can move from exploratory notebooks
+to modular, testable, and more production-friendly code.
